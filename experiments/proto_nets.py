@@ -13,6 +13,7 @@ from few_shot.train import fit
 from few_shot.callbacks import *
 from few_shot.utils import setup_dirs
 from config import PATH
+from few_shot.models import ResNet18Enc
 
 
 setup_dirs()
@@ -33,6 +34,8 @@ parser.add_argument('--k-train', default=60, type=int)
 parser.add_argument('--k-test', default=5, type=int)
 parser.add_argument('--q-train', default=5, type=int)
 parser.add_argument('--q-test', default=1, type=int)
+parser.add_argument('--z-dim', default=64, type=int)
+parser.add_argument('--n-channles', default=3, type=3)
 args = parser.parse_args()
 
 evaluation_episodes = 1000
@@ -44,7 +47,7 @@ if args.dataset == 'omniglot':
     num_input_channels = 1
     drop_lr_every = 20
 elif args.dataset == 'miniImageNet':
-    n_epochs = 80
+    n_epochs = 1000
     dataset_class = MiniImageNet
     num_input_channels = 3
     drop_lr_every = 40
@@ -76,7 +79,7 @@ evaluation_taskloader = DataLoader(
 #########
 # Model #
 #########
-model = get_few_shot_encoder(num_input_channels)
+model = ResNet18Enc(z_dim=64, nc=num_input_channels)
 model.to(device, dtype=torch.double)
 
 
