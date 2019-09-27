@@ -35,7 +35,7 @@ parser.add_argument('--k-test', default=5, type=int)
 parser.add_argument('--q-train', default=5, type=int)
 parser.add_argument('--q-test', default=1, type=int)
 parser.add_argument('--z-dim', default=64, type=int)
-parser.add_argument('--n-channles', default=3, type=3)
+parser.add_argument('--n-channles', default=3, type=int)
 args = parser.parse_args()
 
 evaluation_episodes = 1000
